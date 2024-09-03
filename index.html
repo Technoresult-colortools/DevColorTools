@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore Color Tools, your go-to online resource for a wide range of color conversion tools. Our suite includes Image Color Picker, Hex to RGBA Converter, HSV to RGB Converter, and many more. Convert colors between RGB, HEX, CMYK, and HSL effortlessly, mix colors, generate shades, and extract colors from images. Enhance your design workflow with our intuitive and powerful tools." />
+    <title>Color Tools</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/9ed05647bb.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen font-sans">
+    <header class="bg-white shadow-lg">
+        <div class="container mx-auto px-4 flex justify-between items-center p-4">
+            <a href="index.html" class="text-2xl font-bold text-blue-500">Color Tools</a>
+            <div class="relative flex items-center w-full max-w-xs">
+                <input type="text" class="w-full px-4 py-2 border rounded-full focus:outline-none" placeholder="Search for color tools...">
+                <svg class="absolute right-3 text-gray-500 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </div>
+            <div class="relative">
+                <button id="menuButton" class="focus:outline-none flex items-center text-indigo-600">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+                <div id="mobileMenu" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden">
+                    <a href="colorpicker.html" class="block px-4 py-2 text-gray-700 hover:bg-indigo-100">Image Color Picker</a>
+                    <a href="colorExtractor.html" class="block px-4 py-2 text-gray-700 hover:bg-indigo-100">Image Color Extractor</a>
+                    <a href="hexToRgba.html" class="block px-4 py-2 text-gray-700 hover:bg-indigo-100">Hex to RGBA Converter</a>
+                    <a href="rgbaToHex.html" class="block px-4 py-2 text-gray-700 hover:bg-indigo-100">RGBA to Hex Converter</a>
+                    <a href="colorMixer.html" class="block px-4 py-2 text-gray-700 hover:bg-indigo-100">Color Mixer</a>
+                    <a href="colorShades.html" class="block px-4 py-2 text-gray-700 hover:bg-indigo-100">Color Shades Generator</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container mx-auto p-4">
+        <div id="colorToolsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- First 9 Card Items (Visible by default) -->
+            <!-- (Include your existing 9 cards here) -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <i class="fas fa-eye-dropper text-4xl text-blue-500 mb-4"></i>
+                <h2 class="text-xl font-bold mb-4">Image Color Picker</h2>
+                <p class="text-gray-600">Pick colors directly from your images.</p>
+                <a href="colorpicker.html" class="bg-blue-600 text-white hover:bg-indigo-700 font-thin py-2 px-4 rounded mt-4 inline-block">Go to Tool</a>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <i class="fas fa-image text-4xl text-blue-500 mb-4"></i>
+                <h2 class="text-xl font-bold mb-4">Image Color Extractor</h2>
+                <p class="text-gray-600">Extract color palettes from your images.</p>
+                <a href="colorExtractor.html" class="bg-blue-600 text-white hover:bg-indigo-700 font-thin py-2 px-4 rounded mt-4 inline-block">Go to Tool</a>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <i class="fas fa-hashtag text-4xl text-blue-500 mb-4"></i>
+                <h2 class="text-xl font-bold mb-4">Hex to RGBA Converter</h2>
+                <p class="text-gray-600">Convert Hex color codes to RGBA.</p>
+                <a href="hexToRgba.html" class="bg-blue-600 text-white hover:bg-indigo-700 font-thin py-2 px-4 rounded mt-4 inline-block">Go to Tool</a>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <i class="fas fa-sliders-h text-4xl text-blue-500 mb-4"></i>
+                <h2 class="text-xl font-bold mb-4">RGBA to Hex Converter</h2>
+                <p class="text-gray-600">Convert RGBA color codes to Hex.</p>
+                <a href="rgbaToHex.html" class="bg-blue-600 text-white hover:bg-indigo-700 font-thin py-2 px-4 rounded mt-4 inline-block">Go to Tool</a>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <i class="fas fa-sliders-h text-4xl text-blue-500 mb-4"></i>
+                <h2 class="text-xl font-bold mb-4">HSV to RGB Converter</h2>
+                <p class="text-gray-600">Convert HSV to RGB color codes.</p>
+                <a href="HsvToRgb.html" class="bg-blue-600 text-white hover:bg-indigo-700 font-thin py-2 px-4 rounded mt-4 inline-block">Go to Tool</a>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <i class="fas fa-sliders-h text-4xl text-blue-500 mb-4"></i>
+                <h2 class="text-xl font-bold mb-4">RGB to HSV Converter</h2>
+                <p class="text-gray-600">Convert RGB Color Codes to HSV Values.</p>
+                <a href="RgbToHsv.html" class="bg-blue-600 text-white hover:bg-indigo-700 font-thin py-2 px-4 rounded mt-4 inline-block">Go to Tool</a>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <i class="fas fa-sliders-h text-4xl text-blue-500 mb-4"></i>
+                <h2 class="text-xl font-bold mb-4">CMYK to RGB Converter</h2>
+                <p class="text-gray-600">Convert CMYK to RGB Color Codes.</p>
+                <a href="CmykToRgb.html" class="bg-blue-600 text-white hover:bg-indigo-700 font-thin py-2 px-4 rounded mt-4 inline-block">Go to Tool</a>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <i class="fas fa-palette text-4xl text-blue-500 mb-4"></i>
+                <h2 class="text-xl font-bold mb-4">Color Mixer</h2>
+                <p class="text-gray-600">Mix and match colors to create new shades.</p>
+                <a href="ColorMixer.html" class="bg-blue-600 text-white hover:bg-indigo-700 font-thin py-2 px-4 rounded mt-4 inline-block">Go to Tool</a>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <i class="fas fa-adjust text-4xl text-blue-500 mb-4"></i>
+                <h2 class="text-xl font-bold mb-4">Color Shades Generator</h2>
+                <p class="text-gray-600">Generate different shades of a color.</p>
+                <a href="ColorShades.html" class="bg-blue-600 text-white hover:bg-indigo-700 font-thin py-2 px-4 rounded mt-4 inline-block">Go to Tool</a>
+            </div>
+    
+            <!-- Additional Cards (Initially Hidden) -->
+            <div class="hidden bg-white rounded-xl shadow-lg p-6">
+                <i class="fas fa-sliders-h text-4xl text-blue-500 mb-4"></i>
+                <h2 class="text-xl font-bold mb-4">RGB to CMYK Converter</h2>
+                <p class="text-gray-600">RGB to CMYK Color Converter Transform RGB values to CMYK color codes instantly.</p>
+                <a href="RgbToCmyk.html" class="bg-blue-600 text-white hover:bg-indigo-700 font-thin py-2 px-4 rounded mt-4 inline-block">Go to Tool</a>
+            </div>
+
+            <div class="hidden bg-white rounded-xl shadow-lg p-6">
+                <i class="fas fa-sliders-h text-4xl text-blue-500 mb-4"></i>
+                <h2 class="text-xl font-bold mb-4">HSL to RGB Converter</h2>
+                <p class="text-gray-600">Convert HSL (Hue, Saturation, Lightness) color values to RGB (Red, Green, Blue) format.</p>
+                <a href="HslToRgb.html" class="bg-blue-600 text-white hover:bg-indigo-700 font-thin py-2 px-4 rounded mt-4 inline-block">Go to Tool</a>
+            </div>
+
+            <div class="hidden bg-white rounded-xl shadow-lg p-6">
+                <i class="fas fa-sliders-h text-4xl text-blue-500 mb-4"></i>
+                <h2 class="text-xl font-bold mb-4">HSL to HEX Converter</h2>
+                <p class="text-gray-600">HSL to HEX Converter is a tool that transforms Hue, Saturation, and Lightness(HSL) inputs into HEX color.</p>
+                <a href="HslToHex.html" class="bg-blue-600 text-white hover:bg-indigo-700 font-thin py-2 px-4 rounded mt-4 inline-block">Go to Tool</a>
+            </div>
+
+            <div class="hidden bg-white rounded-xl shadow-lg p-6">
+                <i class="fas fa-sliders-h text-4xl text-blue-500 mb-4"></i>
+                <h2 class="text-xl font-bold mb-4">HSV to Hex Converter</h2>
+                <p class="text-gray-600">HSV to HEX Color Converter is a powerful tool to convert HSV to Hex code.</p>
+                <a href="HsvToHex.html" class="bg-blue-600 text-white hover:bg-indigo-700 font-thin py-2 px-4 rounded mt-4 inline-block">Go to Tool</a>
+            </div>
+
+            <div class="hidden bg-white rounded-xl shadow-lg p-6">
+                <i class="fas fa-sliders-h text-4xl text-blue-500 mb-4"></i>
+                <h2 class="text-xl font-bold mb-4">RGB to HSL Converter</h2>
+                <p class="text-gray-600">RGB to HSL Converter translates RGB (Red, Green, Blue) color values into HSV.</p>
+                <a href="RgbToHsl.html" class="bg-blue-600 text-white hover:bg-indigo-700 font-thin py-2 px-4 rounded mt-4 inline-block">Go to Tool</a>
+            </div>
+
+            <div class="hidden bg-white rounded-xl shadow-lg p-6">
+                <i class="fas fa-paintbrush text-4xl text-blue-500 mb-4"></i>
+                <h2 class="text-xl font-bold mb-4">Color Name Generator</h2>
+                <p class="text-gray-600">The Color Name Generator tool allows you to input color values in HEX, RGB, or HSL formats and get the corresponding color name.</p>
+                <a href="colorNameGenerator.html" class="bg-blue-600 text-white hover:bg-indigo-700 font-thin py-2 px-4 rounded mt-4 inline-block">Go to Tool</a>
+            </div>
+
+            <div class="hidden bg-white rounded-xl shadow-lg p-6">
+                <i class="fa-solid fa-brain text-4xl text-blue-500 mb-4"></i>
+                <h2 class="text-xl font-bold mb-4">AI Color Palette Generator</h2>
+                <p class="text-gray-600">The Color Name Generator tool allows you to input color values in HEX, RGB, or HSL formats and get the corresponding color name.</p>
+                <a href="ColorPaletteGenerator.html" class="bg-blue-600 text-white hover:bg-indigo-700 font-thin py-2 px-4 rounded mt-4 inline-block">Go to Tool</a>
+            </div>
+    
+            <!-- Add more hidden cards here as needed -->
+        </div>
+    
+    
+        <!-- Browse More Button -->
+        <div class="text-center mt-8">
+            <button id="browseMoreBtn" class="bg-blue-600 text-white hover:bg-indigo-700 font-thin py-2 px-6 rounded">Browse More</button>
+        </div>
+    </div>
+    
+    <footer class="mt-auto bg-gray-800 text-white">
+        <div class="container mx-auto px-8 py-8">
+            <div class="flex flex-wrap justify-between">
+                <div class="mb-6 w-full md:w-1/3">
+                    <h3 class="mb-2 text-xl font-bold">Color Tools</h3>
+                    <p class="text-gray-400">Your go-to resource for all things color. Pick, extract, and convert colors with ease.</p>
+                </div>
+                <div class="mb-6 w-full md:w-1/3">
+                    <h3 class="mb-2 text-xl font-bold">Quick Links</h3>
+                    <ul class="text-gray-400">
+                        <li><a href="index.html" class="hover:text-white">Home</a></li>
+                        <li><a href="about.html" class="hover:text-white">About Us</a></li>
+                        <li><a href="contact.html" class="hover:text-white">Contact</a></li>
+                        <li><a href="privacy.html" class="hover:text-white">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="mb-6 w-full md:w-1/3">
+                    <h3 class="mb-2 text-xl font-bold">Follow Us On</h3>
+                    <ul class="flex space-x-4 text-gray-400">
+                        <li><a href="#" class="hover:text-white"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#" class="hover:text-white"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#" class="hover:text-white"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#" class="hover:text-white"><i class="fab fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-4 text-gray-400">
+                &copy; 2024 Color Tools. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

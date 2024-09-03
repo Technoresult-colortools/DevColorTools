@@ -1,0 +1,169 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: 'League Spartan', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 600; /* Bold */
+}
+
+p, li, a, span {
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 200; /* Regular */
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+footer {
+    flex-shrink: 0;
+}
+/* For ColorShades */
+
+.shade {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.shade:hover {
+    transform: scale(1.1);
+    z-index: 10;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+#shades-container {
+    padding: 10px 0;
+}
+
+/* end of shades */
+
+.sidebar {
+    width: 250px;
+    transition: all 0.3s;
+}
+.sidebar-collapsed {
+    width: 60px;
+}
+.main-content {
+    transition: all 0.3s;
+}
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        left: -250px;
+    }
+    .sidebar.open {
+        left: 0;
+    }
+}
+
+/* color picket styles */
+
+.layout-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+aside {
+    flex: 0 0 25%;
+    max-width: 300px;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+}
+
+#image-container img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+#image-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 400px;
+    background-color: #f0f0f0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#color-preview {
+    width: 150px;
+    height: 150px;
+    border: 2px solid #ddd;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+#drop-zone {
+    width: 100%;
+    height: 150px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .layout-container {
+        flex-direction: column;
+    }
+
+    aside {
+        width: 100%;
+        max-width: none;
+        margin-bottom: 20px;
+    }
+
+    main {
+        padding: 10px;
+    }
+}
+
+/* CSS to handle the transition */
+.hidden {
+    display: none;
+}
+
+.text-green-500 {
+    color: #48bb78; /* Tailwind's green-500 color */
+}
+
+.ml-2 {
+    margin-left: 0.5rem;
+}
+
+.transition {
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* for color palette generator */
+
+.palette-color {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+        
+
+

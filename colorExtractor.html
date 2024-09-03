@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Our Image Color Extractor tool allows you to extract and analyze color palettes from your images. Get accurate color codes and enhance your color design workflow quickly." />
+        <title>Image Color Extractor</title>
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="styles.css" />
+        <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500&display=swap" rel="stylesheet" />
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <script src="https://kit.fontawesome.com/9ed05647bb.js" crossorigin="anonymous"></script>
+        <!-- Font Awesome -->
+        <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
+
+        <style>
+          #image-container img {
+              max-width: 100%;
+              max-height: 100%;
+              object-fit: contain;
+          }
+          #image-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 400px;
+            background-color: #f0f0f0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          #color-preview {
+              width: 250px;
+              height: 150px;
+              border: 2px solid #ddd;
+              background-color: #fff;
+          }
+          #drop-zone {
+              width: 100%;
+              height: 150px;
+          }
+          #color-grid {
+              display: grid;
+              grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+              gap: 1rem;
+          }
+          .color-card {
+              background-color: white;
+              border-radius: 8px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+              padding: 1rem;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+          }
+          .color-preview {
+              width: 80px;
+              height: 80px;
+              border-radius: 50%;
+              margin-bottom: 0.5rem;
+          }
+        </style>
+    </head>
+    <body class="bg-gray-50 flex flex-col min-h-screen font-sans">
+        <!-- Header remains unchanged -->
+        <header class="bg-white shadow-lg">
+            <!-- ... (header content remains the same) ... -->
+            <div class="container mx-auto px-4 flex justify-between items-center p-4">
+                <a href="index.html" class="text-2xl font-bold text-blue-500">Color Tools</a>
+                <div class="relative flex items-center w-full max-w-xs">
+                    <input type="text" class="w-full px-4 py-2 border rounded-full focus:outline-none" placeholder="Search for color tools...">
+                    <svg class="absolute right-3 text-gray-500 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+                <div class="relative">
+                    <button id="menuButton" class="focus:outline-none flex items-center text-indigo-600">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </button>
+                    <div id="mobileMenu" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden">
+                        <a href="colorpicker.html" class="block px-4 py-2 text-gray-700 hover:bg-indigo-100">Image Color Picker</a>
+                        <a href="colorExtractor.html" class="block px-4 py-2 text-gray-700 hover:bg-indigo-100">Image Color Extractor</a>
+                        <a href="hexToRgba.html" class="block px-4 py-2 text-gray-700 hover:bg-indigo-100">Hex to RGBA Converter</a>
+                        <a href="rgbaToHex.html" class="block px-4 py-2 text-gray-700 hover:bg-indigo-100">RGBA to Hex Converter</a>
+                        <a href="colorMixer.html" class="block px-4 py-2 text-gray-700 hover:bg-indigo-100">Color Mixer</a>
+                        <a href="colorShades.html" class="block px-4 py-2 text-gray-700 hover:bg-indigo-100">Color Shades Generator</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="layout-container container mx-auto px-4">
+            <main>
+                <div class="flex items-center justify-start mb-6">
+                    <h1 id="h1" class="text-2xl font-bold text-blue-500">Image Color Extractor</h1>
+                </div>
+
+                <div id="drop-zone" class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center mb-6 w-full cursor-pointer">
+                    <i class="fa-solid fa-upload text-4xl text-gray-400 mb-2"></i>
+                    <p class="text-gray-500">Drag your image here, or click to browse</p>
+                    <input type="file" id="image-upload" accept="image/*" class="hidden"/>
+                </div>
+
+                <div id="image-container" class="relative w-full bg-gray-100 rounded-lg mb-6 flex items-center justify-center overflow-hidden">
+                    <!-- Uploaded image will be displayed here -->
+                    <img id="preview-image" alt="Preview Image" class="hidden" />
+                </div>
+
+                <div class="flex w-full items-center mb-6">
+                    <div class="w-full">
+                        <label for="color-count" class="text-gray-600">Number of Colors:</label>
+                        <select id="color-count" class="border rounded-md p-2">
+                            <option value="6">6</option>
+                            <option value="12">12</option>
+                            <option value="16">16</option>
+                            <option value="21">21</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="color-grid" class="w-full mb-6">
+                    <!-- Extracted colors will be displayed here -->
+                </div>
+
+                <!-- About section and other content remains unchanged -->
+                <div class="w-full mt-8">
+                    <!-- ... (about section content remains the same) ... -->
+                    <section class="mb-6">
+                        <h2 class="text-xl font-semibold text-gray-700 mb-2">About Image Color Extractor</h2>
+                        <p class="text-gray-600">
+                            The Image Color Extractor tool allows you to extract all the colors present in an image with just a few clicks.
+                            You can use it to identify the exact color codes in various formats like Hex, RGB, and HSL, as well as see a list of all the extracted colors.
+                        </p>
+                    </section>
+                  
+                    <section class="mb-6">
+                        <h2 class="text-xl font-semibold text-gray-700 mb-2">How to Upload the Image?</h2>
+                        <p class="text-gray-600">
+                          To upload an image, drag and drop your image file into the designated area, or click on the area to browse and select your image from your device.
+                        </p>
+                    </section>
+                  
+                    <section>
+                        <h2 class="text-xl font-semibold text-gray-700 mb-2">How to Use It?</h2>
+                        <p class="text-gray-600">
+                            After uploading your image, the tool will automatically extract all the colors present in the image. The extracted colors, along with their Hex, RGB, and HSL values, will be displayed below the image.
+                            You can copy these values to use them in your design projects.
+                        </p>
+                    </section>
+                </div>
+            </main>
+            
+            <aside>
+                <div class="bg-gray-50 rounded-xl shadow-md p-8 pt-4">
+                    <h2 class="text-xl font-semibold text-blue-500 mb-4">Tool Categories</h2>
+                    <ul class="space-y-3">
+                        <!-- Image Color Picker -->
+                        <li>
+                            <a href="colorpicker.html" class="flex items-center text-gray-700 hover:text-blue-500 transition-colors duration-200">
+                                <i class="fas fa-eye-dropper mr-3 text-blue-500"></i>
+                                <span>Image Color Picker</span>
+                            </a>
+                        </li>
+    
+                        <!-- Color Name Generator -->
+                        <li>
+                            <a href="colorNameGenerator.html" class="flex items-center text-gray-700 hover:text-blue-500 transition-colors duration-200">
+                                <i class="fa-solid fa-paint-roller mr-3 text-blue-500"></i>
+                                <span>Color Name Generator</span>
+                            </a>
+                        </li>
+            
+                        <!-- Image Color Extractor -->
+                        <li>
+                            <a href="colorExtractor.html" class="flex items-center text-gray-700 hover:text-green-500 transition-colors duration-200">
+                                <i class="fas fa-palette mr-3 text-green-500"></i>
+                                <span>Image Color Extractor</span>
+                            </a>
+                        </li>
+            
+                        <!-- Hex to RGBA Converter -->
+                        <li>
+                            <a href="hexToRgba.html" class="flex items-center text-gray-700 hover:text-purple-500 transition-colors duration-200">
+                                <i class="fas fa-exchange-alt mr-3 text-purple-500"></i>
+                                <span>Hex to RGBA Converter</span>
+                            </a>
+                        </li>
+            
+                        <!-- RGBA to Hex Converter -->
+                        <li>
+                            <a href="rgbaToHex.html" class="flex items-center text-gray-700 hover:text-red-500 transition-colors duration-200">
+                                <i class="fas fa-exchange-alt mr-3 text-red-500"></i>
+                                <span>RGBA to Hex Converter</span>
+                            </a>
+                        </li>
+            
+                        <!-- HSV to RGB Converter -->
+                        <li>
+                            <a href="hsvToRgb.html" class="flex items-center text-gray-700 hover:text-yellow-500 transition-colors duration-200">
+                                <i class="fas fa-sync-alt mr-3 text-yellow-500"></i>
+                                <span>HSV to RGB Converter</span>
+                            </a>
+                        </li>
+            
+                        <!-- RGB to HSV Converter -->
+                        <li>
+                            <a href="rgbToHsv.html" class="flex items-center text-gray-700 hover:text-teal-500 transition-colors duration-200">
+                                <i class="fas fa-sync-alt mr-3 text-teal-500"></i>
+                                <span>RGB to HSV Converter</span>
+                            </a>
+                        </li>
+            
+                        <!-- CMYK to RGB Converter -->
+                        <li>
+                            <a href="cmykToRgb.html" class="flex items-center text-gray-700 hover:text-indigo-500 transition-colors duration-200">
+                                <i class="fas fa-adjust mr-3 text-indigo-500"></i>
+                                <span>CMYK to RGB Converter</span>
+                            </a>
+                        </li>
+            
+                        <!-- Color Mixer -->
+                        <li>
+                            <a href="colorMixer.html" class="flex items-center text-gray-700 hover:text-pink-500 transition-colors duration-200">
+                                <i class="fas fa-sliders-h mr-3 text-pink-500"></i>
+                                <span>Color Mixer</span>
+                            </a>
+                        </li>
+            
+                        <!-- Color Shades Generator -->
+                        <li>
+                            <a href="colorShades.html" class="flex items-center text-gray-700 hover:text-orange-500 transition-colors duration-200">
+                                <i class="fas fa-fill-drip mr-3 text-orange-500"></i>
+                                <span>Color Shades Generator</span>
+                            </a>
+                        </li>
+            
+                        <!-- RGB to CMYK Converter -->
+                        <li>
+                            <a href="rgbToCmyk.html" class="flex items-center text-gray-700 hover:text-lime-500 transition-colors duration-200">
+                                <i class="fas fa-exchange-alt mr-3 text-lime-500"></i>
+                                <span>RGB to CMYK Converter</span>
+                            </a>
+                        </li>
+            
+                        <!-- HSL to RGB Converter -->
+                        <li>
+                            <a href="hslToRgb.html" class="flex items-center text-gray-700 hover:text-emerald-500 transition-colors duration-200">
+                                <i class="fas fa-sync-alt mr-3 text-emerald-500"></i>
+                                <span>HSL to RGB Converter</span>
+                            </a>
+                        </li>
+            
+                        <!-- HSL to HEX Converter -->
+                        <li>
+                            <a href="hslToHex.html" class="flex items-center text-gray-700 hover:text-cyan-500 transition-colors duration-200">
+                                <i class="fas fa-exchange-alt mr-3 text-cyan-500"></i>
+                                <span>HSL to HEX Converter</span>
+                            </a>
+                        </li>
+            
+                        <!-- HSV to Hex Converter -->
+                        <li>
+                            <a href="hsvToHex.html" class="flex items-center text-gray-700 hover:text-fuchsia-500 transition-colors duration-200">
+                                <i class="fas fa-exchange-alt mr-3 text-fuchsia-500"></i>
+                                <span>HSV to Hex Converter</span>
+                            </a>
+                        </li>
+            
+                        <!-- RGB to HSL Converter -->
+                        <li>
+                            <a href="rgbToHsl.html" class="flex items-center text-gray-700 hover:text-rose-500 transition-colors duration-200">
+                                <i class="fas fa-sync-alt mr-3 text-rose-500"></i>
+                                <span>RGB to HSL Converter</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </aside> 
+        </div>
+
+        <footer class="mt-auto bg-gray-800 text-white">
+            <div class="container mx-auto px-4 py-8">
+              <div class="flex flex-wrap justify-between">
+                <div class="mb-6 w-full md:mb-0 md:w-1/3">
+                  <h3 class="mb-2 text-xl font-bold">Color Tools</h3>
+                  <p class="text-gray-400">Empowering developers with essential color tools for web design and development.</p>
+                </div>
+                <div class="mb-6 w-full md:mb-0 md:w-1/3">
+                  <h3 class="mb-2 text-xl font-bold">Quick Links</h3>
+                  <ul class="text-gray-400">
+                    <li><a href="index.html" class="hover:text-white">Home</a></li>
+                    <li><a href="about.html" class="hover:text-white">About Us</a></li>
+                    <li><a href="contact.html" class="hover:text-white">Contact</a></li>
+                    <li><a href="privacy.html" class="hover:text-white">Privacy Policy</a></li>
+                </ul>
+                </div>
+                <div class="w-full md:w-1/3">
+                  <h3 class="mb-2 text-xl font-bold">Connect With Us</h3>
+                  <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-github"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin"></i></a>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-8 border-t border-gray-700 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Color Tools. All rights reserved.</p>
+              </div>
+            </div>
+        </footer>
+
+        <script src="script.js"></script>
+        <script src="color_extractor.js"></script>
+    </body>
+</html>
