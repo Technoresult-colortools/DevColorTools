@@ -11,27 +11,24 @@ const rgbToHex = (r, g, b) => {
 };
 
 async function generateColorPalette() {
-    const apiUrl = 'https://www.thecolorapi.com/scheme'; // Colormind API URL
+    const apiUrl = 'https://www.thecolorapi.com/scheme';
+    const baseColor = Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+    const mode = 'analogic';
+    const count = 5;
 
     try {
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            body: JSON.stringify({ model: 'default' }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+        const response = await fetch(`${apiUrl}?hex=${baseColor}&mode=${mode}&count=${count}`);
 
         if (!response.ok) {
             throw new Error(`API request failed: ${response.status} ${response.statusText}`);
         }
 
         const data = await response.json();
-        return data.result.map(color => ({
-            r: color[0],
-            g: color[1],
-            b: color[2],
-            hex: rgbToHex(color[0], color[1], color[2])
+        return data.colors.map(color => ({
+            r: color.rgb.r,
+            g: color.rgb.g,
+            b: color.rgb.b,
+            hex: color.hex.value
         }));
     } catch (error) {
         console.error('Error fetching color palette:', error);
