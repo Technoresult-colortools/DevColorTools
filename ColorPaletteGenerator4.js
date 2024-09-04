@@ -11,7 +11,7 @@ const rgbToHex = (r, g, b) => {
 };
 
 async function generateColorPalette() {
-    const apiUrl = 'http://colormind.io/api/'; // Colormind API URL
+    const apiUrl = 'https://www.thecolorapi.com/scheme'; // Colormind API URL
 
     try {
         const response = await fetch(apiUrl, {
